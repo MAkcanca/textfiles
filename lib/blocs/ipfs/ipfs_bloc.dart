@@ -11,7 +11,7 @@ part 'ipfs_event.dart';
 part 'ipfs_state.dart';
 
 class IpfsBloc extends Bloc<IpfsEvent, IpfsState> {
-  IpfsBloc(IpfsState initialState) : super(InitialIpfsState());
+  IpfsBloc() : super(InitialIpfsState());
   static const platform = const MethodChannel('cambaz.textfiles/ipfs');
 
   @override

@@ -1,11 +1,13 @@
+import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textfiles/blocs/ipfs/ipfs_bloc.dart';
+import 'package:textfiles/blocs/theme/theme_bloc.dart';
 import 'package:textfiles/components/category_card.dart';
 import 'package:textfiles/models/category.dart';
+import 'package:textfiles/pages/filesearch/filesearch_page.dart';
 import 'package:textfiles/utils/constants.dart';
-
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
@@ -15,64 +17,68 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const platform = const MethodChannel('cambaz.textfiles/ipfs');
   Future<List<Category>> futureProduct;
   IpfsBloc _ipfsBloc;
-
-  Future<void> _getBatteryLevel() async {
-    String batteryLevel;
-    try {
-      final int result = await platform.invokeMethod('startPeer');
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
-
-  }
+  ThemeBloc _themeBloc;
 
   @override
   void initState() {
     super.initState();
     _ipfsBloc = BlocProvider.of<IpfsBloc>(context);
-    futureProduct = getCategoriesList("100");
-  }
+    _themeBloc = BlocProvider.of<ThemeBloc>(context);
 
+    futureProduct = getCategoriesList("100");
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<IpfsBloc, IpfsState>(
-        builder: (context, state) {
-          print(state);
-          if (state is PeerNotStarted){
-            _ipfsBloc.add(StartPeer());
-          }
-          return Scaffold(
-              appBar: AppBar(
-                centerTitle: true,
-                iconTheme: IconThemeData(
-                  color: Colors.black, //change your color here
-                ),
-                title: Text(
-                  "Textfiles",
-                  style: TextStyle(color: Colors.black),
-                ),
-                elevation: 0,
-                backgroundColor: Colors.transparent,
+    return BlocBuilder<IpfsBloc, IpfsState>(builder: (context, state) {
+      print(state);
+      if (state is PeerNotStarted) {
+        _ipfsBloc.add(StartPeer());
+      }
+      return Scaffold(
+          appBar: AppBar(
+              centerTitle: true,
+              iconTheme: IconThemeData(
+                color: Colors.black, //change your color here
               ),
-              body: Column(
-                children: [
-                  Center(
+              title: Text(
+                "Textfiles",
+                style: TextStyle(
+                    fontFamily: 'Courier',
+                    fontSize: 36,
+                    fontWeight: FontWeight.w800
+                ),
+              ),
+              elevation: 0,
+              backgroundColor: Colors.transparent,
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: DayNightSwitcherIcon(
+                      isDarkModeEnabled:
+                      _themeBloc.state.themeMode == ThemeMode.dark ? true : false,
+                      onStateChanged: (state) => BlocProvider.of<ThemeBloc>(context)
+                          .add(ThemeChanged(state)),
+                    )),
+              ]),
+          body: Column(
+            children: [
+              Center(
+                child: Hero(
+                  tag: "search",
+                  child: Material(
                     child: Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: 14),
+                      margin: EdgeInsets.symmetric(horizontal: 14, vertical: 12),
                       padding: EdgeInsets.symmetric(horizontal: 16),
                       height: 55,
-                      width: MediaQuery
-                          .of(context)
-                          .size
-                          .width,
+                      width: MediaQuery.of(context).size.width,
                       decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: _themeBloc.state.themeMode == ThemeMode.light ? Colors.white : Colors.white70,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -83,12 +89,19 @@ class _HomePageState extends State<HomePage> {
                           ]),
                       child: TextField(
                         autofocus: false,
+                        focusNode: FocusNode(),
+                        enableInteractiveSelection: false,
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FilesearchPage(
+                              )));
+                        },
                         onChanged: (value) {},
                         textInputAction: TextInputAction.search,
                         cursorHeight: 18,
-                        onSubmitted: (value) {
-
-                        },
+                        onSubmitted: (value) {},
+                        style: TextStyle(color: Colors.black),
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 15),
                           hintText: "Search a Textfile",
@@ -104,41 +117,41 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 12, vertical: 0),
-                      child: FutureBuilder<List<Category>>(
-                        future: futureProduct,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                  child: FutureBuilder<List<Category>>(
+                    future: futureProduct,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.builder(
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2),
-                              physics: BouncingScrollPhysics(),
-                              itemCount: snapshot.data.length,
-                              itemBuilder: (context, index) {
-                                return CategoryCard(
-                                  category: snapshot.data[index],
-                                  gradientcolors: Constants.grad_array[index],
-                                  // product: snapshot.data[index],
-                                  //index: null
-                                );
-                              },
+                          physics: BouncingScrollPhysics(),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                            return CategoryCard(
+                              category: snapshot.data[index],
+                              gradientcolors: Constants.grad_array[index],
+                              // product: snapshot.data[index],
+                              //index: null
                             );
-                          }
-                          else if (snapshot.hasError) {
-                            return Text("${snapshot.error}");
-                          }
-                          return Center(child: CircularProgressIndicator());
-                        },
-                      ),
-                    ),
-                  )
-                ],
-              ) // This trailing comma makes auto-formatting nicer for build methods.
+                          },
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    },
+                  ),
+                ),
+              )
+            ],
+          ) // This trailing comma makes auto-formatting nicer for build methods.
           );
-        }
-    );
+    });
   }
 }

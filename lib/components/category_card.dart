@@ -30,6 +30,7 @@ class _CategoryCardState extends State<CategoryCard> {
           child: InkWell(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             onTap: () => {
+            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
               Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => FilelistPage(

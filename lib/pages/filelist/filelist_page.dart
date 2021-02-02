@@ -26,13 +26,9 @@ class _FilelistPageState extends State<FilelistPage> {
     return Scaffold(
         appBar: AppBar(
           actions: [],
-          iconTheme: IconThemeData(
-            color: Colors.black, //change your color here
-          ),
           centerTitle: true,
           title:  Text(
               widget.category.name,
-              style: TextStyle(color: Colors.black),
             ),
           elevation: 0,
           backgroundColor: Colors.transparent,
