@@ -30,12 +30,14 @@ class _CategoryCardState extends State<CategoryCard> {
           child: InkWell(
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             onTap: () => {
-            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
-              Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => FilelistPage(
-            category: widget.category,
-            ))),
+              if(widget.category.filename.isNotEmpty) {
+                WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FilelistPage(
+                      category: widget.category,
+                    ))),
+              }
             },
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,

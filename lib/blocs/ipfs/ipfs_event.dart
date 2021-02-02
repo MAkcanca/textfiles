@@ -24,6 +24,12 @@ class FetchData extends IpfsEvent {
   FetchData(this.networkCid);
 }
 
+class FetchFromGateway extends IpfsEvent {
+  final String networkCid;
+
+  FetchFromGateway(this.networkCid);
+}
+
 class RetrieveData extends IpfsEvent {
 
   RetrieveData();

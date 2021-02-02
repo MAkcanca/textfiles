@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 
 import 'package:meta/meta.dart';
+import 'package:textfiles/models/textfile.dart';
 
 part 'ipfs_event.dart';
 
@@ -27,6 +28,9 @@ class IpfsBloc extends Bloc<IpfsEvent, IpfsState> {
     }
     if (event is RetrieveData) {
       yield* mapRetrieveDataToState();
+    }
+    if (event is FetchFromGateway) {
+      yield* mapFetchFromGatewayToState(event.networkCid);
     }
   }
 
@@ -55,11 +59,22 @@ class IpfsBloc extends Bloc<IpfsEvent, IpfsState> {
     }
   }
 
+  Stream<IpfsState> mapFetchFromGatewayToState(String networkCid) async* {
+    String result;
+    yield FetchInProgress();
+    result = await getFromgateway(networkCid);
+    print(result);
+    if (result != null) {
+      yield Fetched(result);
+    } else {
+      yield FetchFailed();
+    }
+  }
+
   Stream<IpfsState> mapFetchDataToState(String networkCid) async* {
     try {
       await platform.invokeMethod('startfetchData', {"cid": networkCid});
       yield FetchInProgress();
-
     } catch (_, stacktrace) {
       print(stacktrace);
       yield FetchFailed();

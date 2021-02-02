@@ -28,8 +28,9 @@ class _FileviewPageState extends State<FileviewPage> {
   IpfsBloc _ipfsBloc;
   ThemeBloc _themeBloc;
   Timer timer;
+  int countTries = 0;
 
-  Future<void> getDatafromNetwork() async {
+  /*Future<void> getDatafromNetwork() async {
     String returnedData;
     try {
       final String result = await platform.invokeMethod('getData', {"cid": widget.textfile.networkCid});
@@ -42,9 +43,25 @@ class _FileviewPageState extends State<FileviewPage> {
     });
   }
 
-  void retrieveData(t){
+  Future<void> getDatafromGateway() async {
+    String returnedData;
+    try {
+      final String result = await getFromgateway(widget.textfile.networkCid);
+      returnedData = result;
+    } on PlatformException catch (e) {
+      returnedData = "Failed to get data: '${e.message}'.";
+    }
+  }*/
+
+  void retrieveData(t) async {
     _ipfsBloc.add(RetrieveData());
+    countTries += 1;
     if (filedata != null) {
+      countTries = 0;
+      t.cancel();
+    }
+    if(countTries >= 10){
+      _ipfsBloc.add(FetchFromGateway(widget.textfile.networkCid));
       t.cancel();
     }
   }

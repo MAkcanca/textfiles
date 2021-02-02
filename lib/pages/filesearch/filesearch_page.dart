@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:textfiles/blocs/theme/theme_bloc.dart';
+import 'package:textfiles/components/file_card.dart';
 import 'package:textfiles/models/textfile.dart';
 
 class FilesearchPage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _FilesearchPageState extends State<FilesearchPage> {
   }
 
   _searchResults(String text) {
+    futureFiles = searchTextfile(text);
     setState(() {
       /*return new FutureBuilder<List<Textfile>>(
           future: search(text),
@@ -121,6 +123,35 @@ class _FilesearchPageState extends State<FilesearchPage> {
               ],
             ),
           ),
+          Expanded(
+            child: FutureBuilder<List<Textfile>>(
+              future: futureFiles,
+              builder: (context, snapshot){
+                if(snapshot.hasData){
+                  return GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(childAspectRatio: 2.8,
+                        crossAxisCount: 1),
+                    physics: BouncingScrollPhysics(),
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index) {
+                      return FileCard(
+                        textfile: snapshot.data[index],
+                        // product: snapshot.data[index],
+                        //index: null
+                      );
+                    },
+                  );
+                }
+                else if(snapshot.hasError){
+                  return Text("${snapshot.error}");
+                }
+                if(searchText.isNotEmpty){
+                  return Center(child: CircularProgressIndicator());
+                }
+                return SizedBox();
+              },
+            ),
+          )
         ]),
       ),
     );
