@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
-import 'package:flutter_html/style.dart';
 import 'package:textfiles/blocs/ipfs/ipfs_bloc.dart';
 import 'package:textfiles/blocs/theme/theme_bloc.dart';
 import 'package:textfiles/models/textfile.dart';
