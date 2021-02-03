@@ -5,6 +5,8 @@ import 'package:http/http.dart' as http;
 
 import 'dart:async' show Future;
 
+import 'category.dart';
+
 class Textfile {
   final String title;
   final String description;
@@ -26,12 +28,13 @@ class Textfile {
   }
 }
 
-Future<String> getJson() {
-  return rootBundle.loadString('assets/data/100.json');
+Future<String> getJson(Category category) {
+  return rootBundle.loadString('assets/data/${category.filename}');
 }
 
 Future<List<Textfile>> searchTextfile(keyword) async {
-  var data = await getJson();
+  var cat1 = Category(filename: "100.json");
+  var data = await getJson(cat1);
   final filesList = (jsonDecode(data) as List)
       .map((p) => Textfile.fromJson(p));
  /* return (json.decode(utf8.decode(response.bodyBytes)) as List)
@@ -53,8 +56,8 @@ Future<String> getFromgateway(networkCid) async{
 }
 
 
-Future<List<Textfile>> getTextfileList(category) async{
-  var data = await getJson();
+Future<List<Textfile>> getTextfileList(Category category) async{
+  var data = await getJson(category);
   final parsed = jsonDecode(data).cast<Map<String, dynamic>>();
 
   return parsed.map<Textfile>((json) => Textfile.fromJson(json)).toList();

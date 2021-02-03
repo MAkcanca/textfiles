@@ -60,7 +60,7 @@ class _FileviewPageState extends State<FileviewPage> {
       countTries = 0;
       t.cancel();
     }
-    if(countTries >= 10){
+    if(countTries >= 20){
       _ipfsBloc.add(FetchFromGateway(widget.textfile.networkCid));
       t.cancel();
     }

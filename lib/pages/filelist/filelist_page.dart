@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:textfiles/components/file_card.dart';
+import 'package:textfiles/components/file_card_notitle.dart';
 import 'package:textfiles/models/category.dart';
 import 'package:textfiles/models/textfile.dart';
 
@@ -18,7 +19,7 @@ class _FilelistPageState extends State<FilelistPage> {
   @override
   void initState() {
     super.initState();
-    futureProduct = getTextfileList(widget.category.name);
+    futureProduct = getTextfileList(widget.category);
   }
 
   @override
@@ -47,11 +48,20 @@ class _FilelistPageState extends State<FilelistPage> {
                       physics: BouncingScrollPhysics(),
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
-                        return FileCard(
-                          textfile: snapshot.data[index],
-                          // product: snapshot.data[index],
-                          //index: null
-                        );
+                        if(snapshot.data[index].title.isNotEmpty){
+                          return FileCard(
+                            textfile: snapshot.data[index],
+                            // product: snapshot.data[index],
+                            //index: null
+                          );
+                        } else {
+                          return FileCardNoTitle(
+                            textfile: snapshot.data[index],
+                            // product: snapshot.data[index],
+                            //index: null
+                          );
+                        }
+
                       },
                     );
                   }

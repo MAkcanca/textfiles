@@ -7,27 +7,27 @@
   {
     "name": "Computers",
     "description": "General Computer-Related Files",
-    "filename": "100.json"
+    "filename": "computers.json"
   },
   {
     "name": "Games",
     "description": "Home and Arcade Games",
-    "filename": "100.json"
+    "filename": "games.json"
   },
   {
     "name": "Hack",
     "description": "The seamy underside of, well, Everything",
-    "filename": "100.json"
+    "filename": "hacking.json"
   },
   {
     "name": "Science",
     "description": "And not quite Science",
-    "filename": "100.json"
+    "filename": "science.json"
   },
   {
     "name": "News",
     "description": "News Stories",
-    "filename": "100.json"
+    "filename": "news.json"
   },
   {
     "name": "Coming Soon",

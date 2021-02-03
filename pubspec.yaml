@@ -55,6 +55,11 @@ flutter:
   assets:
     - assets/data/categories.json
     - assets/data/100.json
+    - assets/data/computers.json
+    - assets/data/games.json
+    - assets/data/hacking.json
+    - assets/data/news.json
+    - assets/data/science.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
