@@ -48,8 +48,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
 
   void checkFirstSeen() {
     if (isFirstLaunch == null || isFirstLaunch == true) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => IntroPage()));
+      /*Navigator.push(
+          context, MaterialPageRoute(builder: (context) => IntroPage()));*/
     }
   }
 
