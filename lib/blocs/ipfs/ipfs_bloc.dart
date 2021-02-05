@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:meta/meta.dart';
 import 'package:textfiles/models/textfile.dart';
+import 'package:textfiles/services/shared_pref_service.dart';
 
 part 'ipfs_event.dart';
 
@@ -71,6 +72,7 @@ class IpfsBloc extends Bloc<IpfsEvent, IpfsState> {
     }
   }
 
+
   Stream<IpfsState> mapFetchDataToState(String networkCid) async* {
     try {
       await platform.invokeMethod('startfetchData', {"cid": networkCid});
@@ -80,6 +82,7 @@ class IpfsBloc extends Bloc<IpfsEvent, IpfsState> {
       yield FetchFailed();
     }
   }
+
   Stream<IpfsState> mapAppLaunchedToState() async* {
     try {
       yield PeerNotStarted();

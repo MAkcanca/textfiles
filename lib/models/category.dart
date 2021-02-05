@@ -24,7 +24,7 @@ Future<String> getCategories() {
   return rootBundle.loadString('assets/data/categories.json');
 }
 
-Future<List<Category>> getCategoriesList(category) async{
+Future<List<Category>> getCategoriesList() async{
   var data = await getCategories();
   final parsed = jsonDecode(data).cast<Map<String, dynamic>>();
 

@@ -43,3 +43,8 @@ class Fetched extends IpfsState {
   @override
   String toString() => 'FetchedState';
 }
+
+class FirstLaunch extends IpfsState {
+  @override
+  String toString() => 'FirstLaunchState';
+}

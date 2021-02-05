@@ -60,7 +60,7 @@ class _FileviewPageState extends State<FileviewPage> {
       countTries = 0;
       t.cancel();
     }
-    if(countTries >= 20){
+    if(countTries >= 2){
       _ipfsBloc.add(FetchFromGateway(widget.textfile.networkCid));
       t.cancel();
     }
@@ -153,6 +153,9 @@ class _FileviewPageState extends State<FileviewPage> {
           );
         }
         return Scaffold(
+          appBar: AppBar(
+            title: new Text(widget.textfile.filename,),
+          ),
           body: Center(
             child: CircularProgressIndicator(),
           )

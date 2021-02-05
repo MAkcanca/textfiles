@@ -1,3 +1,4 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,8 @@ import 'package:textfiles/blocs/theme/theme_bloc.dart';
 import 'package:textfiles/components/category_card.dart';
 import 'package:textfiles/models/category.dart';
 import 'package:textfiles/pages/filesearch/filesearch_page.dart';
+import 'package:textfiles/pages/intro/intro_page.dart';
+import 'package:textfiles/services/shared_pref_service.dart';
 import 'package:textfiles/utils/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,26 +19,45 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   Future<List<Category>> futureProduct;
   IpfsBloc _ipfsBloc;
   ThemeBloc _themeBloc;
+  bool isFirstLaunch;
+  SharedPreferencesService sharedPrefService;
 
   @override
   void initState() {
     super.initState();
     _ipfsBloc = BlocProvider.of<IpfsBloc>(context);
     _themeBloc = BlocProvider.of<ThemeBloc>(context);
-
-    futureProduct = getCategoriesList("100");
+    futureProduct = getCategoriesList();
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+    initSharedPrefs();
+  }
+
+  Future<void> initSharedPrefs() async {
+    sharedPrefService = await SharedPreferencesService.instance;
+    isFirstLaunch = sharedPrefService.isFirstLaunch;
+  }
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    checkFirstSeen();
+  }
+
+  void checkFirstSeen() {
+    if (isFirstLaunch == null || isFirstLaunch == true) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => IntroPage()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<IpfsBloc, IpfsState>(builder: (context, state) {
       print(state);
-      if (state is PeerNotStarted) {
+      if (state is PeerNotStarted && isFirstLaunch == false) {
         _ipfsBloc.add(StartPeer());
       }
       return Scaffold(

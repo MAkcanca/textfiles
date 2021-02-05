@@ -25,6 +25,7 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
   Stream<ThemeState> _mapThemeLoadStartedToState() async* {
     final sharedPrefService = await SharedPreferencesService.instance;
     final isDarkModeEnabled = sharedPrefService.isDarkModeEnabled;
+
     if (isDarkModeEnabled == null) {
       sharedPrefService.setDarkModeInfo(false);
       yield ThemeState(ThemeMode.light);

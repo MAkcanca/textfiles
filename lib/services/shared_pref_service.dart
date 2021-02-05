@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPrefKeys {
   SharedPrefKeys._();
   static const String darkModeEnabled = 'darkModeEnabled';
+  static const String isFirstLaunch = 'isFirstLaunch';
 }
 
 class SharedPreferencesService {
@@ -26,6 +27,13 @@ class SharedPreferencesService {
   Future<void> setDarkModeInfo(bool isDarkModeEnabled) async =>
       await _preferences.setBool(
           SharedPrefKeys.darkModeEnabled, isDarkModeEnabled);
+
+  Future<void> setIsFirstLaunchInfo(bool isFirstLaunch) async =>
+      await _preferences.setBool(
+          SharedPrefKeys.isFirstLaunch, isFirstLaunch);
+
+  bool get isFirstLaunch =>
+      _preferences.getBool(SharedPrefKeys.isFirstLaunch);
 
   bool get isDarkModeEnabled =>
       _preferences.getBool(SharedPrefKeys.darkModeEnabled);
