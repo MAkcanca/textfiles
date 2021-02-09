@@ -7,6 +7,7 @@ import 'package:textfiles/blocs/ipfs/ipfs_bloc.dart';
 import 'package:textfiles/blocs/theme/theme_bloc.dart';
 import 'package:textfiles/components/category_card.dart';
 import 'package:textfiles/models/category.dart';
+import 'package:textfiles/pages/about/about_page.dart';
 import 'package:textfiles/pages/filesearch/filesearch_page.dart';
 import 'package:textfiles/pages/intro/intro_page.dart';
 import 'package:textfiles/services/shared_pref_service.dart';
@@ -19,11 +20,10 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
+class _HomePageState extends State<HomePage> {
   Future<List<Category>> futureProduct;
   IpfsBloc _ipfsBloc;
   ThemeBloc _themeBloc;
-  bool isFirstLaunch;
   SharedPreferencesService sharedPrefService;
 
   @override
@@ -38,18 +38,13 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
 
   Future<void> initSharedPrefs() async {
     sharedPrefService = await SharedPreferencesService.instance;
-    isFirstLaunch = sharedPrefService.isFirstLaunch;
-  }
-
-  @override
-  void afterFirstLayout(BuildContext context) {
     checkFirstSeen();
   }
 
   void checkFirstSeen() {
-    if (isFirstLaunch == null || isFirstLaunch == true) {
-      /*Navigator.push(
-          context, MaterialPageRoute(builder: (context) => IntroPage()));*/
+    if (sharedPrefService.isFirstLaunch == null || sharedPrefService.isFirstLaunch == true) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => IntroPage()));
     }
   }
 
@@ -57,7 +52,8 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
   Widget build(BuildContext context) {
     return BlocBuilder<IpfsBloc, IpfsState>(builder: (context, state) {
       print(state);
-      if (state is PeerNotStarted && isFirstLaunch == false) {
+      //if (state is PeerNotStarted && isFirstLaunch == false) {
+      if (state is PeerNotStarted) {
         _ipfsBloc.add(StartPeer());
       }
       return Scaffold(
@@ -66,12 +62,20 @@ class _HomePageState extends State<HomePage> with AfterLayoutMixin<HomePage> {
               iconTheme: IconThemeData(
                 color: Colors.black, //change your color here
               ),
-              title: Text(
-                "Textfiles",
-                style: TextStyle(
-                    fontFamily: 'Courier',
-                    fontSize: 36,
-                    fontWeight: FontWeight.w800),
+              title: GestureDetector(
+                onTap: () => {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AboutPage()))
+                },
+                child: Text(
+                  "Textfiles",
+                  style: TextStyle(
+                      fontFamily: 'Courier',
+                      fontSize: 36,
+                      fontWeight: FontWeight.w800),
+                ),
               ),
               elevation: 0,
               backgroundColor: Colors.transparent,

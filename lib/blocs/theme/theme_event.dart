@@ -17,4 +17,13 @@ class ThemeChanged extends ThemeEvent {
   List<Object> get props => [value];
 }
 
+class FirstLaunchChanged extends ThemeEvent {
+  final bool value;
+
+  FirstLaunchChanged(this.value) : assert(value != null);
+
+  @override
+  List<Object> get props => [value];
+}
+
 class ThemeLoadStarted extends ThemeEvent {}

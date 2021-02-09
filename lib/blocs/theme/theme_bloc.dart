@@ -19,6 +19,8 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       yield* _mapThemeLoadStartedToState();
     } else if (event is ThemeChanged) {
       yield* _mapThemeChangedToState(event.value);
+    } else if (event is FirstLaunchChanged) {
+      yield* _mapFirstLaunchChangedToState(event.value);
     }
   }
 
@@ -34,6 +36,12 @@ class ThemeBloc extends Bloc<ThemeEvent, ThemeState> {
       isDarkModeEnabled ? ThemeMode.dark : ThemeMode.light;
       yield ThemeState(themeMode);
     }
+  }
+
+
+  Stream<ThemeState> _mapFirstLaunchChangedToState(bool value) async* {
+    final sharedPrefService = await SharedPreferencesService.instance;
+    await sharedPrefService.setIsFirstLaunchInfo(false);
   }
 
   Stream<ThemeState> _mapThemeChangedToState(bool value) async* {
