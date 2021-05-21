@@ -1,7 +1,7 @@
 # Textfiles
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
 
-![Textfiles](https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true)
+![Textfiles](https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true =52x52)
 
 ![Cover](https://github.com/MAkcanca/textfiles/raw/master/images/cover.png?raw=true)
 
