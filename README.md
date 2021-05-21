@@ -1,8 +1,6 @@
 # Textfiles
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
-
-![Textfiles](https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true|width=52px)
-
+<img src="https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true" width="52" height="52">
 ![Cover](https://github.com/MAkcanca/textfiles/raw/master/images/cover.png?raw=true)
 
 On the face of things, we seem to be merely talking about text-based files, containing only the letters of the English Alphabet (and the occasional punctuation mark).
