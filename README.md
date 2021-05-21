@@ -1,7 +1,5 @@
-# Textfiles
+# <img src="https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true" width="52" height="52"> Textfiles
 [![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
-
-<img src="https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true" width="52" height="52">
 
 ![Cover](https://github.com/MAkcanca/textfiles/raw/master/images/cover.png?raw=true)
 
