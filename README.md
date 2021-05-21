@@ -1,16 +1,15 @@
-# textfiles
+# Textfiles
+[![](https://img.shields.io/badge/project-IPFS-blue.svg?style=flat-square)](http://ipfs.io/)
 
-A new Flutter project.
+![Textfiles](https://github.com/MAkcanca/textfiles/raw/master/images/icon.png?raw=true)
 
-## Getting Started
+![Cover](https://github.com/MAkcanca/textfiles/raw/master/images/cover.png?raw=true)
 
-This project is a starting point for a Flutter application.
+On the face of things, we seem to be merely talking about text-based files, containing only the letters of the English Alphabet (and the occasional punctuation mark).
+On deeper inspection, of course, this isn't quite the case. What this app offers is a glimpse into the history of writers and artists bound by the 128 characters that the American Standard Code for Information Interchange (ASCII) allowed them. The focus is on mid-1980's textfiles and the world as it was then, but even these files are sometime retooled 1960s and 1970s works, and offshoots of this culture exist to this day. These files were archived by Jason Scott in Textfiles.com and now they are stored in a peer-to-peer network to preserve our history, forever.
 
-A few resources to get you started if this is your first Flutter project:
+From computers, internet magazines and provocative ideas to ASCII arts, Textfiles are great resource for reference, history, and fun.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+![Screen 1](https://github.com/MAkcanca/textfiles/raw/master/images/1.png?raw=true)
+![Screen 2](https://github.com/MAkcanca/textfiles/raw/master/images/2.png?raw=true)
